@@ -152,23 +152,25 @@ export default function TreePage() {
             <>
                 {node.left && (
                     <line
-                        x1={`calc(50% + ${node.x}px)`}
-                        y1={`${node.y + 24}px`}
-                        x2={`calc(50% + ${node.left.x}px)`}
-                        y2={`${node.left.y + 24}px`}
-                        stroke="rgba(99, 102, 241, 0.4)"
-                        strokeWidth="2"
+                        x1={node.x}
+                        y1={node.y + 24}
+                        x2={node.left.x}
+                        y2={node.left.y + 24}
+                        stroke="#6366f1"
+                        strokeWidth="3"
+                        strokeOpacity="0.8"
                         className="transition-all duration-500"
                     />
                 )}
                 {node.right && (
                     <line
-                        x1={`calc(50% + ${node.x}px)`}
-                        y1={`${node.y + 24}px`}
-                        x2={`calc(50% + ${node.right.x}px)`}
-                        y2={`${node.right.y + 24}px`}
-                        stroke="rgba(99, 102, 241, 0.4)"
-                        strokeWidth="2"
+                        x1={node.x}
+                        y1={node.y + 24}
+                        x2={node.right.x}
+                        y2={node.right.y + 24}
+                        stroke="#6366f1"
+                        strokeWidth="3"
+                        strokeOpacity="0.8"
                         className="transition-all duration-500"
                     />
                 )}
@@ -220,12 +222,28 @@ export default function TreePage() {
                         </p>
                     </div>
 
-                    <div className="flex flex-wrap gap-2">
-                        {classification.map((cls, i) => (
-                            <span key={i} className="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-bold text-primary uppercase tracking-wider">
-                                {cls}
-                            </span>
-                        ))}
+                    <div className="flex flex-col items-end gap-2">
+                        <div className="flex flex-wrap gap-2">
+                            {classification.map((cls, i) => (
+                                <span key={i} className="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-bold text-primary uppercase tracking-wider">
+                                    {cls}
+                                </span>
+                            ))}
+                        </div>
+                        <div className="flex gap-4">
+                            <div className="flex items-center gap-2">
+                                <div className="w-3 h-3 rounded-full bg-slate-800 border-2 border-white/10"></div>
+                                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Normal</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-3 h-3 rounded-full bg-indigo-500/60 border-2 border-indigo-500"></div>
+                                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Active/Checking</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-4 h-1 bg-indigo-500 rounded-full"></div>
+                                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Connection</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -261,8 +279,10 @@ export default function TreePage() {
 
                         <div className="w-full h-full relative overflow-auto custom-scrollbar">
                             <div className="min-w-[600px] min-h-[500px] relative">
-                                <svg className="absolute inset-0 w-full h-full pointer-events-none z-10">
-                                    {renderConnections(root)}
+                                <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" style={{ overflow: 'visible' }}>
+                                    <g style={{ transform: "translateX(50%)" }}>
+                                        {renderConnections(root)}
+                                    </g>
                                 </svg>
                                 {renderNodes(root)}
                                 {!root && (

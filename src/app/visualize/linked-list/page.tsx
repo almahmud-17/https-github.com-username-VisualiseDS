@@ -202,6 +202,22 @@ export default function LinkedListPage() {
                             </button>
                         ))}
                     </div>
+                    <div className="flex flex-wrap items-center gap-2 mt-2">
+                        <span className="text-[9px] text-muted-foreground uppercase font-mono tracking-widest bg-white/5 border border-white/10 px-2 py-1 rounded-md">
+                            <span className="text-white/40">ADDR:</span> 0x1A2B
+                        </span>
+                        <span className="text-[9px] text-primary uppercase font-mono tracking-widest bg-primary/10 border border-primary/20 px-2 py-1 rounded-md">
+                            <span className="text-primary/50">NEXT:</span> 0x3C4D
+                        </span>
+                        {type === "doubly" && (
+                            <span className="text-[9px] text-cyan-500 uppercase font-mono tracking-widest bg-cyan-500/10 border border-cyan-500/20 px-2 py-1 rounded-md">
+                                <span className="text-cyan-500/50">PREV:</span> 0x5E6F
+                            </span>
+                        )}
+                        <span className="text-[9px] text-accent uppercase font-mono tracking-widest bg-accent/10 border border-accent/20 px-2 py-1 rounded-md">
+                            NULL
+                        </span>
+                    </div>
                 </div>
 
                 <div className="flex-1 flex flex-col lg:grid lg:grid-cols-12 gap-6">
@@ -248,7 +264,7 @@ export default function LinkedListPage() {
                             {type}
                         </div>
 
-                        <div className="w-full flex-1 flex flex-wrap items-center justify-center gap-y-16 gap-x-6 md:gap-x-12 relative overflow-auto custom-scrollbar p-10">
+                        <div className="w-full flex-1 flex flex-wrap items-center justify-center gap-y-16 gap-x-6 md:gap-x-12 relative overflow-auto custom-scrollbar p-10 pt-16">
                             <AnimatePresence mode="popLayout">
                                 {nodes.map((node, idx) => (
                                     <div key={node.id} className="flex items-center gap-3 md:gap-4 relative">
@@ -261,24 +277,55 @@ export default function LinkedListPage() {
                                                 backgroundColor: highlightedId === node.id ? "rgba(99, 102, 241, 0.2)" : "rgba(30, 41, 59, 0.6)"
                                             }}
                                             exit={{ opacity: 0, scale: 0, y: 50 }}
-                                            className="w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl border-2 flex flex-col relative shadow-2xl backdrop-blur-md"
+                                            className="rounded-xl flex flex-row items-stretch border-2 relative shadow-2xl backdrop-blur-md overflow-hidden min-w-[6rem] md:min-w-[8rem] h-16 md:h-20"
                                         >
-                                            <div className="flex-1 flex items-center justify-center font-black text-lg md:text-xl text-foreground">
-                                                {node.val}
+                                            {/* Previous Pointer Section */}
+                                            {type === "doubly" && (
+                                                <div className="w-10 md:w-14 border-r border-white/10 flex flex-col items-center justify-center p-1 bg-white/5">
+                                                    <span className="text-[6px] md:text-[8px] opacity-50 font-mono tracking-widest">PREV</span>
+                                                    <span className="text-[7px] md:text-[9px] font-mono text-cyan-500 mt-1">
+                                                        {node.prev ? `0x${node.prev.substring(0, 4)}` : 'NULL'}
+                                                    </span>
+                                                </div>
+                                            )}
+
+                                            {/* Value Section */}
+                                            <div className="flex-1 flex flex-col items-center justify-center p-2 relative">
+                                                <span className="text-[6px] md:text-[8px] opacity-40 uppercase absolute top-1 font-mono tracking-widest">VAL</span>
+                                                <div className="font-black text-lg md:text-2xl text-foreground">
+                                                    {node.val}
+                                                </div>
                                             </div>
-                                            {idx === 0 && <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-[8px] font-black text-primary uppercase tracking-[0.2em]">HEAD</div>}
-                                            {idx === nodes.length - 1 && <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[8px] font-black text-accent uppercase tracking-[0.2em]">TAIL</div>}
+
+                                            {/* Next Pointer Section */}
+                                            <div className="w-10 md:w-14 border-l border-white/10 flex flex-col items-center justify-center p-1 bg-primary/10">
+                                                <span className="text-[6px] md:text-[8px] opacity-50 text-primary font-mono tracking-widest">NEXT</span>
+                                                <span className="text-[7px] md:text-[9px] font-mono text-primary mt-1">
+                                                    {node.next ? `0x${node.next.substring(0, 4)}` : 'NULL'}
+                                                </span>
+                                            </div>
+
+                                            {/* Annotations */}
+                                            {idx === 0 && <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-black text-primary uppercase tracking-[0.2em]">HEAD</div>}
+                                            {idx === nodes.length - 1 && <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-black text-accent uppercase tracking-[0.2em]">TAIL</div>}
                                         </motion.div>
 
+                                        {/* Node Address Below */}
+                                        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[9px] md:text-[10px] font-mono text-muted-foreground opacity-70">
+                                            0x{node.id.substring(0, 4)}
+                                        </div>
+
+                                        {/* Arrows */}
                                         {idx < nodes.length - 1 && (
-                                            <motion.div initial={{ opacity: 0, width: 0 }} animate={{ opacity: 1, width: "auto" }} className="flex items-center">
-                                                {type === "doubly" ? <ArrowLeftRight className="text-white/20" size={20} /> : <ArrowRight className="text-white/20" size={18} />}
+                                            <motion.div initial={{ opacity: 0, width: 0 }} animate={{ opacity: 1, width: "auto" }} className="flex items-center my-auto">
+                                                {type === "doubly" ? <ArrowLeftRight className="text-white/30" size={24} /> : <ArrowRight className="text-white/30" size={22} />}
                                             </motion.div>
                                         )}
 
+                                        {/* Circular Pointer */}
                                         {type === "circular" && idx === nodes.length - 1 && nodes.length > 1 && (
                                             <div className="absolute top-1/2 left-full -translate-y-1/2 ml-4">
-                                                <RotateCcw className="text-primary/30" size={20} />
+                                                <RotateCcw className="text-primary/40 animate-spin-slow" size={24} />
                                             </div>
                                         )}
                                     </div>
