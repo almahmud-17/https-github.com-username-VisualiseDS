@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 };
 
 import { BackgroundElements } from "@/components/BackgroundElements";
+import { Providers } from "@/components/Providers";
 
 export default function RootLayout({
   children,
@@ -25,12 +26,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-primary/20`}
       >
-        <BackgroundElements />
-        {children}
+        <Providers>
+          <BackgroundElements />
+          {children}
+        </Providers>
       </body>
     </html>
   );

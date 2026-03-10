@@ -1,104 +1,87 @@
 "use client";
 
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-interface HighlightedCodeProps {
+interface HighlightedTextProps {
     line: string;
-    lang: string;
 }
 
-const HighlightedCode: React.FC<HighlightedCodeProps> = ({ line }) => {
-    // Simple regex-based syntax highlighter for C++ and Python
+const HighlightedText: React.FC<HighlightedTextProps> = ({ line }) => {
     const tokenize = (text: string) => {
-        const parts = text.split(/(\s+|[()\[\]{}.,:;=+\-*\/<>!&|?])/);
+        const parts = text.split(/(\s+|[()\[\]{}.,:;=+\-*/<>!&|?])/);
         return parts.map((part, i) => {
-            if (/^(def|class|if|else|return|while|for|in|import|from|struct|void|int|bool|double|float|char|long|unsigned|template|typename|using|namespace|std|new|delete|nullptr|public|protected|private|vector|deque|push_back|pop_back|push|pop|front|back|nullptr_t)$/.test(part)) {
-                return <span key={i} style={{ color: "var(--sh-keyword)" }}>{part}</span>;
-            }
-            if (/^[a-zA-Z_][a-zA-Z0-9_]*(?=\()/.test(part)) {
-                return <span key={i} style={{ color: "var(--sh-function)" }}>{part}</span>;
+            if (/^(Step|If|Else|While|For|Return|Repeat|Until|Stop|Start|Function|End|Then)$/i.test(part)) {
+                return <span key={i} className="text-[#3b82f6] [.light_&]:text-[#007AFF] font-bold">{part}</span>;
             }
             if (/^[0-9]+$/.test(part)) {
-                return <span key={i} style={{ color: "var(--sh-number)" }}>{part}</span>;
-            }
-            if (/^#.*$/.test(part) || /^\/\/.*$/.test(part) || part.startsWith("/*")) {
-                return <span key={i} style={{ color: "var(--sh-comment)" }}>{part}</span>;
+                return <span key={i} className="text-[#10b981] [.light_&]:text-[#34C759]">{part}</span>;
             }
             if (/^".*"$|^'.*'$/.test(part)) {
-                return <span key={i} style={{ color: "var(--sh-string)" }}>{part}</span>;
+                return <span key={i} className="text-[#8b5cf6] [.light_&]:text-[#8B5CF6]">{part}</span>;
             }
-            if (/^(Node|Stack|Queue|List|Tree|TreeNode|BST|std::vector|std::deque|std::stack|std::queue)$/.test(part)) {
-                return <span key={i} style={{ color: "var(--sh-class)" }}>{part}</span>;
-            }
-            return <span key={i}>{part}</span>;
+            return <span key={i} className="text-gray-100 [.light_&]:text-slate-800">{part}</span>;
         });
     };
 
-    return <pre className="inline-block whitespace-pre font-bold">{tokenize(line)}</pre>;
+    return <pre className="inline-block whitespace-pre font-medium">{tokenize(line)}</pre>;
 };
 
 interface CodePanelProps {
-    code: {
+    code?: {
         python: string[];
         cpp: string[];
     };
+    algorithm?: string[];
     currentLine: number;
 }
 
-export function CodePanel({ code, currentLine }: CodePanelProps) {
-    const [lang, setLang] = React.useState<"python" | "cpp">("python");
+export function CodePanel({ code, algorithm, currentLine }: CodePanelProps) {
+    // If they still pass code for whatever reason, fallback or ignore it since we want algorithms everywhere.
+    // However we'll assume the parent component has been updated to pass `algorithm`
+    const content = algorithm || code?.python || [];
 
     return (
-        <div className="glass-card flex flex-col h-full overflow-hidden border border-white/5">
-            <div className="px-4 py-2 border-b border-white/5 bg-white/5 flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground font-mono">
-                    IMPLEMENTATION
-                </span>
-                <div className="flex bg-black/40 rounded-lg p-1">
-                    {(["python", "cpp"] as const).map((l) => (
-                        <button
-                            key={l}
-                            onClick={() => setLang(l)}
-                            className={cn(
-                                "px-3 py-1 text-[10px] font-bold rounded-md transition-all uppercase tracking-tighter",
-                                lang === l ? "bg-primary text-white shadow-lg" : "text-muted-foreground hover:text-white"
-                            )}
-                        >
-                            {l === "python" ? "Python" : "C++"}
-                        </button>
-                    ))}
+        <div className="glass-card flex flex-col h-full overflow-hidden border border-[#3b82f6]/20 [.light_&]:border-black/5 bg-black/60 [.light_&]:bg-white/40 backdrop-blur-3xl shadow-[0_0_50px_rgba(59,130,246,0.1)] [.light_&]:shadow-xl rounded-3xl relative">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#3b82f6]/20 blur-[100px] -z-10 rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#10b981]/10 blur-[100px] -z-10 rounded-full pointer-events-none" />
+
+            <div className="px-6 py-4 border-b border-white/5 [.light_&]:border-black/5 bg-white/5 [.light_&]:bg-white/40 flex items-center justify-between z-10">
+                <div className="flex items-center gap-3">
+                    <div className="relative flex h-3 w-3">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3b82f6] opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-[#3b82f6]"></span>
+                    </div>
+                    <span className="text-xs font-bold tracking-[0.2em] text-[#3b82f6] font-mono relative">
+                        ALGORITHM
+                    </span>
+                </div>
+                <div className="flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500/80 shadow-[0_0_10px_rgba(239,68,68,0.5)] border border-red-500" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/80 shadow-[0_0_10px_rgba(234,179,8,0.5)] border border-yellow-500" />
+                    <div className="w-3 h-3 rounded-full bg-green-500/80 shadow-[0_0_10px_rgba(34,197,94,0.5)] border border-green-500" />
                 </div>
             </div>
-            <div className="flex-1 overflow-auto p-4 font-mono-vscode text-sm leading-relaxed custom-scrollbar bg-black/20">
-                {code[lang].map((line, idx) => (
+            <div className="flex-1 overflow-auto p-6 font-mono text-[15px] leading-8 custom-scrollbar relative z-10">
+                {content.map((line, idx) => (
                     <div
                         key={idx}
                         className={cn(
-                            "px-2 rounded transition-all duration-200 relative min-h-[1.5rem]",
+                            "px-4 py-1.5 rounded-xl transition-all duration-300 relative min-h-[2.5rem] flex items-start group mb-1",
                             currentLine === idx
-                                ? "font-bold"
-                                : "text-foreground/80"
+                                ? "bg-white/10 [.light_&]:bg-[#007AFF]/10 border-l-[3px] border-[#3b82f6] [.light_&]:border-[#007AFF] translate-x-1 shadow-[0_4px_20px_rgba(0,0,0,0.3)] [.light_&]:shadow-[0_4px_10px_rgba(0,122,255,0.1)]"
+                                : "hover:bg-white/5 [.light_&]:hover:bg-black/5 border-l-[3px] border-transparent"
                         )}
                     >
-                        <span className="inline-block w-6 shrink-0 opacity-20 select-none text-xs">
-                            {idx + 1}
+                        <span className={cn(
+                            "inline-block w-10 shrink-0 select-none text-xs mt-1.5 font-bold font-mono tracking-widest",
+                            currentLine === idx ? "text-[#3b82f6] [.light_&]:text-[#007AFF] opacity-100" : "text-white/20 [.light_&]:text-slate-400 group-hover:text-white/40 [.light_&]:group-hover:text-slate-500"
+                        )}>
+                            {(idx + 1).toString().padStart(2, '0')}
                         </span>
-                        <HighlightedCode line={line} lang={lang} />
-
-                        <AnimatePresence>
-                            {currentLine === idx && (
-                                <motion.div
-                                    layoutId="code-highlight"
-                                    initial={{ opacity: 0, scaleX: 0.95 }}
-                                    animate={{ opacity: 1, scaleX: 1 }}
-                                    exit={{ opacity: 0, scaleX: 0.95 }}
-                                    className="absolute inset-x-0 inset-y-0 bg-primary/20 rounded-md -z-10 border-l-4 border-primary shadow-[0_0_15px_rgba(99,102,241,0.2)]"
-                                    transition={{ type: "spring", bounce: 0, duration: 0.3 }}
-                                />
-                            )}
-                        </AnimatePresence>
+                        <div className="flex-1 pt-0.5">
+                            <HighlightedText line={line} />
+                        </div>
                     </div>
                 ))}
             </div>

@@ -20,30 +20,63 @@
 
 @layer base {
   :root {
-    --background: #0F172A;
+    --background: #060912;
     --foreground: #F8FAFC;
+    --card-bg: rgba(15, 23, 42, 0.6);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --button-gradient: linear-gradient(135deg, #6366F1, #8B5CF6);
+  }
+
+  :root.light {
+    --background: #F8F9FF;
+    --foreground: #111827;
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --border-color: rgba(0, 0, 0, 0.05);
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --button-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
   }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
-    @apply antialiased min-h-screen;
+    @apply antialiased min-h-screen transition-colors duration-500 overflow-x-hidden;
     font-family: var(--font-sans);
   }
 }
 
 @utility glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
 }
 
 @utility glass-card {
-  background: rgba(30, 41, 59, 0.4);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--card-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-color);
   border-radius: 1.5rem;
 }
+
+@utility liquid-button {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
+  backdrop-filter: blur(30px) !important;
+  -webkit-backdrop-filter: blur(30px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.3) !important;
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 1),
+    inset 0 -4px 5px rgba(0, 0, 0, 0.05),
+    0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 9999px !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8) !important;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
 
 .font-mono-vscode {
   font-family: var(--font-mono-vscode);
@@ -61,11 +94,93 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(128, 128, 128, 0.2);
     border-radius: 10px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: var(--color-primary);
+  }
+}
+
+@utility liquid-node {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 100%) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow:
+    inset 0 2px 5px rgba(255, 255, 255, 0.8),
+    0 10px 20px rgba(0, 0, 0, 0.05) !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+}
+
+@utility liquid-node-active {
+  background: linear-gradient(180deg, rgba(0, 122, 255, 0.2) 0%, rgba(0, 122, 255, 0.05) 100%) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(0, 122, 255, 0.5) !important;
+  box-shadow:
+    inset 0 2px 5px rgba(255, 255, 255, 0.5),
+    0 10px 20px rgba(0, 122, 255, 0.15) !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+}
+
+@utility liquid-node-success {
+  background: linear-gradient(180deg, rgba(52, 199, 89, 0.2) 0%, rgba(52, 199, 89, 0.05) 100%) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(52, 199, 89, 0.5) !important;
+  box-shadow:
+    inset 0 2px 5px rgba(255, 255, 255, 0.5),
+    0 10px 20px rgba(52, 199, 89, 0.15) !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+}
+
+@utility liquid-node-danger {
+  background: linear-gradient(180deg, rgba(255, 59, 48, 0.2) 0%, rgba(255, 59, 48, 0.05) 100%) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 59, 48, 0.5) !important;
+  box-shadow:
+    inset 0 2px 5px rgba(255, 255, 255, 0.5),
+    0 10px 20px rgba(255, 59, 48, 0.15) !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+}
+
+@utility liquid-node-secondary {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.05) 100%) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(139, 92, 246, 0.5) !important;
+  box-shadow:
+    inset 0 2px 5px rgba(255, 255, 255, 0.5),
+    0 10px 20px rgba(139, 92, 246, 0.15) !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+}
+
+@utility liquid-selector {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  border-radius: 1.25rem;
+  display: flex;
+}
+
+@utility liquid-selector-item-active {
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+
+  :where(.light) & {
+    background: #007AFF;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
   }
 }

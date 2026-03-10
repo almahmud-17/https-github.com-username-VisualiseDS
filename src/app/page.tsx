@@ -36,7 +36,7 @@ const visualizers = [
     description: "Visualize variations: Singly, Doubly, and Circular Linked Lists.",
     icon: <Network className="text-primary" />,
     href: "/visualize/linked-list",
-    color: "bg-primary/10 border-primary/20 hover:border-primary/50",
+    color: "bg-primary/10 border-primary/20 [.light_&]:border-[#007AFF]/20 hover:border-primary/50",
   },
   {
     title: "Binary Tree",
@@ -74,10 +74,12 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="container max-w-7xl px-6 py-20 flex flex-col items-center text-center gap-8 relative">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/10 blur-[120px] rounded-full -z-10 pointer-events-none" />
+      <section className="container max-w-7xl px-6 py-32 flex flex-col items-center text-center gap-8 relative overflow-hidden">
+        {/* Stylish the Glass Container */}
+        <div className="absolute inset-0 max-w-5xl mx-auto h-[600px] top-1/2 -translate-y-1/2 bg-gradient-to-b from-blue-900/40 via-blue-900/10 to-transparent rounded-[4rem] border border-white/5 [.light_&]:border-black/5 backdrop-blur-3xl -z-20"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/20 [.light_&]:bg-[#007AFF]/10 blur-[120px] rounded-full -z-10 pointer-events-none" />
 
-        <div className="flex flex-col items-center gap-1.5 px-6 py-2 bg-primary/5 border border-primary/20 rounded-2xl animate-fade-in backdrop-blur-sm group hover:border-primary/40 transition-all cursor-default scale-110 mb-2">
+        <div className="flex flex-col items-center gap-1.5 px-6 py-2 bg-primary/5 [.light_&]:bg-[#007AFF]/5 border border-primary/20 [.light_&]:border-[#007AFF]/20 rounded-2xl animate-fade-in backdrop-blur-sm group hover:border-primary/40 [.light_&]:hover:border-[#007AFF]/40 transition-all cursor-default scale-110 mb-2">
           <div className="flex items-center gap-2">
             <Cpu size={14} className="text-primary group-hover:rotate-180 transition-transform duration-500" />
             <span className="text-[10px] font-bold tracking-[0.2em] text-primary">A almahmud_17 project</span>
@@ -85,7 +87,7 @@ export default function Home() {
         </div>
 
         <h1 className="text-6xl md:text-8xl font-black tracking-tight text-foreground leading-[0.9] max-w-4xl">
-          Visualizing <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-primary/80 animate-gradient">DSA</span>
+          Visualizing <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-primary/80 [.light_&]:from-[#007AFF] [.light_&]:via-[#6E6BFF] [.light_&]:to-[#A855F7] animate-gradient">DSA</span>
         </h1>
 
         <p className="text-muted-foreground text-lg md:text-xl max-w-2xl leading-relaxed">

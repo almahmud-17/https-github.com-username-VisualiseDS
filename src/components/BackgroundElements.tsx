@@ -27,92 +27,74 @@ export function BackgroundElements() {
     if (!mounted) return null;
 
     return (
-        <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none bg-[#0F172A]">
-            {/* Darker deep space background */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.05)_0%,transparent_50%)]" />
+        <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none bg-[#060912] [.light_&]:bg-[#F8F9FF]">
+            {/* Base Ambient Gradients */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.08)_0%,transparent_60%)] [.light_&]:bg-[radial-gradient(circle_at_50%_0%,rgba(99,102,241,0.12)_0%,transparent_70%)]" />
 
-            {/* Ambient Gradients - More Vibrant */}
-            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/10 blur-[120px] rounded-full animate-pulse" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-purple-500/10 blur-[150px] rounded-full" />
-            <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-emerald-500/5 blur-[100px] rounded-full" />
+            {/* Apple Sequoia Style Liquid Blobs */}
+            {/* Blob 1: Top Left - Indigo/Blue */}
+            <motion.div
+                animate={{
+                    scale: [1, 1.2, 1],
+                    x: [0, 50, 0],
+                    y: [0, 30, 0],
+                }}
+                transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-indigo-600/20 blur-[130px] rounded-full"
+            />
 
-            {/* Grid Pattern with Glow */}
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] mix-blend-overlay" />
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20" />
+            {/* Blob 2: Bottom Right - Purple/Pink */}
+            <motion.div
+                animate={{
+                    scale: [1.1, 1, 1.1],
+                    x: [0, -40, 0],
+                    y: [0, -60, 0],
+                }}
+                transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute bottom-[-15%] right-[-10%] w-[70%] h-[70%] bg-purple-600/15 blur-[160px] rounded-full"
+            />
 
-            {/* Floating Coding Elements */}
+            {/* Blob 3: Center Left - Emerald/Cyan */}
+            <motion.div
+                animate={{
+                    opacity: [0.3, 0.5, 0.3],
+                    scale: [1, 1.3, 1],
+                }}
+                transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-[30%] left-[-5%] w-[40%] h-[40%] bg-emerald-500/10 blur-[120px] rounded-full"
+            />
+
+            {/* Grain Texture */}
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay" />
+
+            {/* Grid Pattern */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] [.light_&]:bg-[linear-gradient(to_right,rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:5rem_5rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30" />
+
+            {/* Subtle Coding Elements */}
             {elements.map((item, idx) => (
                 <motion.div
                     key={idx}
                     initial={{ opacity: 0 }}
                     animate={{
-                        opacity: [0.1, 0.4, 0.1],
-                        y: [0, -100, 0],
-                        x: [0, idx % 2 === 0 ? 50 : -50, 0],
+                        opacity: [0.05, 0.2, 0.05],
+                        y: [0, -80, 0],
                         rotate: [0, 360],
                     }}
                     transition={{
-                        duration: item.duration * 1.5,
+                        duration: item.duration * 2,
                         repeat: Infinity,
-                        ease: "linear",
+                        ease: "easeInOut",
                     }}
                     style={{
                         position: "absolute",
                         top: item.top,
                         left: item.left,
                     }}
-                    className="text-primary/10 drop-shadow-[0_0_8px_rgba(99,102,241,0.3)]"
+                    className="text-white/20 [.light_&]:text-indigo-600/10"
                 >
                     <item.Icon size={item.size} />
                 </motion.div>
             ))}
-
-            {/* Code Snippet Particles */}
-            {["if()", "{...}", "while", "=>", "log", "null"].map((code, i) => (
-                <motion.div
-                    key={i}
-                    animate={{
-                        opacity: [0.05, 0.15, 0.05],
-                        y: [-20, 20],
-                    }}
-                    transition={{
-                        duration: 10 + i * 2,
-                        repeat: Infinity,
-                        repeatType: "reverse",
-                    }}
-                    className="absolute font-mono text-[8px] sm:text-xs font-black text-white/5 whitespace-nowrap"
-                    style={{
-                        top: `${15 + i * 15}%`,
-                        left: `${5 + (i * 17) % 90}%`,
-                    }}
-                >
-                    {code}
-                </motion.div>
-            ))}
-
-            {/* Dynamic Binary Streams */}
-            <div className="absolute inset-0 flex justify-around opacity-[0.03] text-[8px] font-mono leading-none overflow-hidden h-full">
-                {[...Array(8)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        initial={{ y: "-100%" }}
-                        animate={{ y: "100%" }}
-                        transition={{
-                            duration: 15 + i * 5,
-                            repeat: Infinity,
-                            ease: "linear",
-                            delay: i * 2
-                        }}
-                        className="flex flex-col gap-1 py-10"
-                    >
-                        {[...Array(50)].map((_, j) => (
-                            <span key={j} className={j % 7 === 0 ? "text-primary/40 shadow-[0_0_10px_rgba(99,102,241,1)]" : ""}>
-                                {Math.round(Math.random())}
-                            </span>
-                        ))}
-                    </motion.div>
-                ))}
-            </div>
         </div>
     );
 }
