@@ -11,7 +11,7 @@ import { getSelectionSortSteps } from "@/algorithms/selectionSort";
 import { getMergeSortSteps } from "@/algorithms/mergeSort";
 import { getQuickSortSteps } from "@/algorithms/quickSort";
 import { getInsertionSortSteps } from "@/algorithms/insertionSort";
-import { Play, StepForward, RotateCcw, ChevronDown } from "lucide-react";
+import { Play, Pause, StepForward, RotateCcw, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const INITIAL_ARRAY_SIZE = 20;
@@ -210,7 +210,7 @@ export default function SortingPage() {
                         </div>
                         <div className="grid grid-cols-2 gap-3 mt-2">
                            <PremiumButton className="h-14 px-8 text-base font-black rounded-full" variant="gradient" onClick={() => setIsPlaying(!isPlaying)}>
-                              {isPlaying ? "Pause" : <div className="flex items-center gap-2"><Play size={16} fill="currentColor" /> Play</div>}
+                              {isPlaying ? <><Pause size={16} /> Pause</> : <div className="flex items-center gap-2"><Play size={16} fill="currentColor" /> Play</div>}
                            </PremiumButton>
                            <PremiumButton className="h-14 px-8 text-base font-black rounded-full" variant="secondary" onClick={() => setCurrentStep(prev => Math.min(prev + 1, steps.length - 1))}>
                               <StepForward size={16} /> Step

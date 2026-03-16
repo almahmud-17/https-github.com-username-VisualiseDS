@@ -7,8 +7,9 @@ import { PremiumButton } from "@/components/ui/PremiumButton";
 import { getHanoiSteps, HanoiStep } from "@/algorithms/hanoi";
 import {
       Play,
+      Pause,
+      ChevronRight,
       RotateCcw,
-      Info,
       Activity,
       Settings,
       Layers,
@@ -78,7 +79,7 @@ export default function HanoiPage() {
                               {/* Controls Panel */}
                               <div className="lg:col-span-4 flex flex-col gap-6 order-2 lg:order-1">
                                     <div className="glass-card p-8 flex flex-col gap-8 border border-white/5 [.light_&]:border-black/5 relative overflow-hidden">
-                                          <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500 [.light_&]:bg-[#007AFF]/5 [.light_&]:bg-[#007AFF]/5 blur-3xl rounded-full" />
+                                          <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 blur-3xl rounded-full" />
 
                                           <div className="flex flex-col gap-6">
                                                 <div className="flex flex-col gap-4">
@@ -116,21 +117,31 @@ export default function HanoiPage() {
                                                             />
                                                       </div>
 
-                                                      <div className="grid grid-cols-1 gap-3 mt-2">
-                                                            <PremiumButton className="h-14 px-8 text-base font-black uppercase tracking-widest shadow-xl shadow-pink-500/20"
+                                                      <div className="grid grid-cols-2 gap-3 mt-2">
+                                                            <PremiumButton className="h-14 px-8 text-base font-black uppercase tracking-widest"
                                                                   variant="gradient"
                                                                   onClick={() => setIsPlaying(!isPlaying)}
                                                             >
-                                                                  {isPlaying ? "Pause Engine" : <div className="flex items-center gap-2"><Play size={16} fill="currentColor" /> Start Puzzle</div>}
+                                                                  {isPlaying ? <><Pause size={16} /> Pause</> : <><Play size={16} fill="currentColor" /> {currentStep > 0 ? "Resume" : "Start"}</>}
                                                             </PremiumButton>
-                                                            <PremiumButton className="h-14 px-8 text-xs font-black uppercase tracking-widest" variant="secondary" onClick={handleReset}>
+                                                            <PremiumButton className="h-14 px-8 text-base font-black uppercase tracking-widest"
+                                                                  variant="primary"
+                                                                  onClick={() => {
+                                                                        setIsPlaying(false);
+                                                                        setCurrentStep(p => Math.min(p + 1, steps.length - 1));
+                                                                  }}
+                                                                  disabled={currentStep >= steps.length - 1}
+                                                            >
+                                                                  <ChevronRight size={16} /> Step
+                                                            </PremiumButton>
+                                                            <PremiumButton className="h-14 px-8 text-xs font-black uppercase tracking-widest col-span-2" variant="secondary" onClick={handleReset}>
                                                                   <RotateCcw size={14} className="mr-2" /> Reset State
                                                             </PremiumButton>
                                                       </div>
                                                 </div>
 
                                                 {/* Move Logic Panel */}
-                                                <div className="mt-2 p-5 rounded-[2rem] bg-black/40 [.light_&]:bg-black/5 border border-white/5 [.light_&]:border-black/5 space-y-4 shadow-inner">
+                                                <div className="mt-2 p-5 rounded-[2rem] bg-white/5 [.light_&]:bg-black/5 border border-white/5 [.light_&]:border-black/5 space-y-4 backdrop-blur-sm">
                                                       <h3 className="text-[10px] font-black tracking-[0.3em] text-pink-500 uppercase flex items-center gap-2">
                                                             <Activity size={10} /> Operation
                                                       </h3>
@@ -168,6 +179,25 @@ export default function HanoiPage() {
                                           HANOI
                                     </div>
 
+                                    {/* Legend and Step Counter — TOP of canvas, no conflict with peg labels */}
+                                    <div className="absolute top-6 left-8 right-8 flex items-center justify-between z-20">
+                                          <div className="flex gap-6 px-4 py-2 bg-white/5 [.light_&]:bg-black/5 border border-white/10 [.light_&]:border-black/10 rounded-2xl backdrop-blur-sm">
+                                                <div className="flex items-center gap-2">
+                                                      <div className="w-2 h-2 rounded-full bg-pink-500 shadow-[0_0_10px_rgba(236,72,153,0.5)]"></div>
+                                                      <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">Active</span>
+                                                </div>
+                                                <div className="flex items-center gap-2 border-l border-white/10 [.light_&]:border-black/10 pl-4">
+                                                      <div className="w-2 h-2 rounded-full bg-white/20 [.light_&]:bg-black/20"></div>
+                                                      <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">Idle</span>
+                                                </div>
+                                          </div>
+
+                                          <div className="flex items-center gap-3 bg-pink-500/10 border border-pink-500/20 px-4 py-2 rounded-2xl font-mono text-[10px] font-black text-pink-400 tracking-widest uppercase">
+                                                <Activity size={12} className="text-pink-500" />
+                                                Step {currentStep} / {steps.length - 1}
+                                          </div>
+                                    </div>
+
                                     <div className="flex-1 flex items-end justify-around pb-20 px-12 relative z-10">
                                           {currentData.pegs.map((peg, pegIdx) => (
                                                 <div key={pegIdx} className="relative flex flex-col items-center w-full max-w-[180px]">
@@ -175,7 +205,7 @@ export default function HanoiPage() {
                                                       <div className="absolute bottom-0 w-3 h-72 bg-gradient-to-t from-pink-500/20 to-pink-500/5 [.light_&]:from-slate-500/40 [.light_&]:to-slate-500/5 border-x border-white/10 [.light_&]:border-black/10 rounded-t-full -z-10" />
                                                       <div className="absolute bottom-0 w-32 h-2 bg-white/10 [.light_&]:bg-black/10 rounded-full -z-10 translate-y-2 blur-[2px]" />
 
-                                                      {/* Peg Label */}
+                                                      {/* Peg Label — positioned below base, won't conflict with legend anymore */}
                                                       <div className="absolute -bottom-12 font-black text-lg text-white/20 [.light_&]:text-black/40 font-mono tracking-widest capitalize">
                                                             Peg {String.fromCharCode(65 + pegIdx)}
                                                       </div>
@@ -192,7 +222,7 @@ export default function HanoiPage() {
                                                                                     initial={{ y: -300, opacity: 0 }}
                                                                                     animate={{ y: 0, opacity: 1 }}
                                                                                     exit={{ y: -300, opacity: 0 }}
-                                                                                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                                                                                    transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.8 }}
                                                                                     style={{ width: `${width}px` }}
                                                                                     className={cn(
                                                                                           "h-8 rounded-full shadow-lg border border-white/10 [.light_&]:border-black/10 flex items-center justify-center relative group",
@@ -203,7 +233,7 @@ export default function HanoiPage() {
                                                                                     <div className="absolute inset-x-2 top-1 h-3 bg-white/20 blur-[1px] rounded-full pointer-events-none" />
 
                                                                                     <div className={cn(
-                                                                                          "absolute inset-0 rounded-xl transition-colors duration-300",
+                                                                                          "absolute inset-0 rounded-full transition-all duration-500",
                                                                                           diskId === 1 ? "bg-gradient-to-r from-pink-500 to-rose-500" :
                                                                                                 diskId === 2 ? "bg-gradient-to-r from-purple-500 to-indigo-500" :
                                                                                                       diskId === 3 ? "bg-gradient-to-r from-blue-500 to-cyan-500" :
@@ -221,25 +251,6 @@ export default function HanoiPage() {
                                                 </div>
                                           ))}
                                     </div>
-
-                                    {/* Legend and Info Bar */}
-                                    <div className="absolute bottom-6 left-8 right-8 flex items-center justify-between">
-                                          <div className="flex gap-6 px-4 py-2 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm shadow-xl">
-                                                <div className="flex items-center gap-2">
-                                                      <div className="w-2 h-2 rounded-full bg-pink-500 shadow-[0_0_10px_rgba(236,72,153,0.5)]"></div>
-                                                      <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">Active</span>
-                                                </div>
-                                                <div className="flex items-center gap-2 border-l border-white/10 pl-4">
-                                                      <div className="w-2 h-2 rounded-full bg-white/20"></div>
-                                                      <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">Idle</span>
-                                                </div>
-                                          </div>
-
-                                          <div className="flex items-center gap-3 bg-pink-500/10 border border-pink-500/20 px-4 py-2 rounded-2xl font-mono text-[10px] font-black text-pink-400 tracking-widest uppercase shadow-xl">
-                                                <Activity size={12} className="text-pink-500" />
-                                                Step {currentStep} / {steps.length - 1}
-                                          </div>
-                                    </div>
                               </div>
                         </div>
 
@@ -254,7 +265,7 @@ export default function HanoiPage() {
                               </div>
                               <div className="h-[500px] lg:h-full flex flex-col gap-6">
                                     <div className="flex items-center gap-3">
-                                          <div className="p-2 rounded-xl bg-pink-500 [.light_&]:bg-[#007AFF]/10 text-pink-400 [.light_&]:text-[#007AFF]">
+                                          <div className="p-2 rounded-xl bg-pink-500/10 text-pink-400 [.light_&]:text-[#007AFF]">
                                                 <Terminal size={20} />
                                           </div>
                                           <h2 className="text-xl font-bold text-foreground tracking-tight uppercase">Algorithm Source</h2>

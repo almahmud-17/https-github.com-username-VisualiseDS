@@ -49,7 +49,7 @@ export function InputPanel({
     };
 
     return (
-        <div className="glass-card p-6 flex flex-col gap-6 border border-white/5 [.light_&]:border-black/5 shadow-xl relative overflow-hidden group">
+        <div className="glass-card p-6 flex flex-col gap-6 border border-white/5 [.light_&]:border-black/5 shadow-xl relative overflow-hidden group backdrop-blur-md">
             <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
             <div className="flex flex-col gap-5">

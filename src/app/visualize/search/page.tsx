@@ -6,8 +6,7 @@ import { CodePanel } from "@/components/CodePanel";
 import { LogicBreakdown } from "@/components/LogicBreakdown";
 import { PremiumButton } from "@/components/ui/PremiumButton";
 import { getLinearSearchSteps, getBinarySearchSteps, SearchStep } from "@/algorithms/search";
-import { Play, RotateCcw, Search, ChevronRight, Activity, Terminal } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Play, Pause, RotateCcw, Search, ChevronRight, Activity } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type SearchType = "linear" | "binary";
@@ -99,6 +98,27 @@ export default function SearchPage() {
       setIsPlaying(true);
    };
 
+   const handlePlayPause = () => {
+      if (steps.length === 0) {
+         handleSearch();
+      } else {
+         setIsPlaying(!isPlaying);
+      }
+   };
+
+   const handleStep = () => {
+      if (steps.length === 0) {
+         const newSteps = type === "linear"
+            ? getLinearSearchSteps(array, target)
+            : getBinarySearchSteps(array, target);
+         setSteps(newSteps);
+         setCurrentStep(0);
+      } else {
+         setCurrentStep(p => Math.min(p + 1, steps.length - 1));
+      }
+      setIsPlaying(false);
+   };
+
    const currentData = steps[currentStep] || { currentIndex: -1, found: false, message: "Ready to search..." };
 
    return (
@@ -176,18 +196,21 @@ export default function SearchPage() {
                               />
                            </div>
 
-                           <div className="grid grid-cols-1 gap-3 mt-4">
-                              <PremiumButton className="h-14 px-8 text-base font-black uppercase tracking-widest shadow-xl shadow-primary/20" variant="gradient" onClick={handleSearch}>
-                                 <div className="flex items-center gap-2"><Play size={16} fill="currentColor" /> Initialize Search</div>
+                           <div className="grid grid-cols-2 gap-3 mt-4">
+                              <PremiumButton className="h-14 px-8 text-base font-black uppercase tracking-widest" variant="gradient" onClick={handlePlayPause}>
+                                 {isPlaying ? <><Pause size={16} /> Pause</> : <><Play size={16} fill="currentColor" /> {steps.length > 0 && currentStep < steps.length - 1 ? "Resume" : "Search"}</>}
                               </PremiumButton>
-                              <PremiumButton className="h-14 px-8 text-xs font-black uppercase tracking-widest" variant="secondary" onClick={generateArray}>
+                              <PremiumButton className="h-14 px-8 text-base font-black uppercase tracking-widest" variant="primary" onClick={handleStep} disabled={steps.length > 0 && currentStep >= steps.length - 1}>
+                                 <ChevronRight size={16} /> Step
+                              </PremiumButton>
+                              <PremiumButton className="h-14 px-8 text-xs font-black uppercase tracking-widest col-span-2" variant="secondary" onClick={generateArray}>
                                  <RotateCcw size={14} className="mr-2" /> New Random Dataset
                               </PremiumButton>
                            </div>
                         </div>
 
                         {/* Search Progress/Status */}
-                        <div className="mt-2 p-5 rounded-[2rem] bg-black/40 [.light_&]:bg-black/5 border border-white/5 [.light_&]:border-black/5 space-y-4 shadow-inner">
+                        <div className="mt-2 p-5 rounded-[2rem] bg-white/5 [.light_&]:bg-black/5 border border-white/5 [.light_&]:border-black/5 space-y-4 backdrop-blur-sm">
                            <h3 className="text-[10px] font-black tracking-[0.3em] text-primary uppercase flex items-center gap-2">
                               <Activity size={10} /> Status
                            </h3>
@@ -212,55 +235,51 @@ export default function SearchPage() {
 
                   {/* Status Message */}
                   <div className="absolute top-12 left-1/2 -translate-x-1/2 w-full text-center px-12 z-20">
-                     <motion.div
+                     <div
                         key={currentData.message}
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-xl font-black text-primary uppercase italic tracking-tighter"
+                        className="text-xl font-black text-primary uppercase italic tracking-tighter transition-all duration-500"
                      >
                         {currentData.message}
-                     </motion.div>
+                     </div>
                   </div>
 
                   <div className="flex flex-wrap items-center justify-center gap-4 w-full max-w-4xl relative z-10 px-8">
-                     <AnimatePresence mode="popLayout">
-                        {array.map((val, idx) => {
-                           const isCurrent = idx === currentData.currentIndex;
-                           const isFound = steps[currentStep]?.found && idx === steps[currentStep]?.foundIndex;
-                           const isLow = idx === (steps[currentStep]?.low ?? -1);
-                           const isHigh = idx === (steps[currentStep]?.high ?? -1);
-                           const isMid = idx === (steps[currentStep]?.mid ?? -1);
+                     {array.map((val, idx) => {
+                        const isCurrent = idx === currentData.currentIndex;
+                        const isFound = steps[currentStep]?.found && idx === steps[currentStep]?.foundIndex;
+                        const isLow = idx === (steps[currentStep]?.low ?? -1);
+                        const isHigh = idx === (steps[currentStep]?.high ?? -1);
+                        const isMid = idx === (steps[currentStep]?.mid ?? -1);
+                        const isExcluded = type === "binary" && steps[currentStep] && (idx < steps[currentStep].low! || idx > steps[currentStep].high!);
 
-                           return (
-                              <motion.div
-                                 key={`${idx}-${val}`}
-                                 layout
-                                 className={cn(
-                                    "w-16 h-16 rounded-2xl border-2 flex items-center justify-center text-xl font-bold transition-all duration-300 relative",
-                                    isFound ? "bg-emerald-500 border-emerald-400 text-white [.light_&]:liquid-node-success scale-110 shadow-[0_0_30px_rgba(16,185,129,0.4)]" :
-                                       isCurrent ? "bg-primary border-primary text-white [.light_&]:liquid-node-active scale-110 shadow-[0_0_30px_rgba(99,102,241,0.4)]" :
-                                          isMid ? "bg-blue-500/20 border-blue-500 text-blue-400 [.light_&]:liquid-node-secondary" :
-                                             (type === "binary" && steps[currentStep] && (idx < steps[currentStep].low! || idx > steps[currentStep].high!))
-                                                ? "opacity-20 translate-y-4 grayscale" :
-                                                "bg-white/5 border-white/10 text-white/40"
-                                 )}
-                              >
-                                 {val}
-                                 {isCurrent && (
-                                    <div className="absolute -top-12 flex flex-col items-center">
-                                       <Search size={16} className="text-primary animate-bounce" />
-                                    </div>
-                                 )}
-                                 {type === "binary" && (
-                                    <>
-                                       {isLow && <div className="absolute -bottom-6 text-xs font-black text-blue-400 uppercase tracking-widest">LOW</div>}
-                                       {isHigh && <div className="absolute -bottom-10 text-xs font-black text-rose-400 uppercase tracking-widest">HIGH</div>}
-                                    </>
-                                 )}
-                              </motion.div>
-                           );
-                        })}
-                     </AnimatePresence>
+                        return (
+                           <div
+                              key={idx}
+                              className={cn(
+                                 "w-16 h-16 rounded-2xl border-2 flex items-center justify-center text-xl font-bold relative",
+                                 "transition-all duration-500 ease-out",
+                                 isFound ? "bg-emerald-500/20 border-emerald-400 text-emerald-400 [.light_&]:liquid-node-success scale-110 shadow-[0_0_30px_rgba(16,185,129,0.4)]" :
+                                    isCurrent ? "bg-primary/20 border-primary text-primary [.light_&]:liquid-node-active scale-110 shadow-[0_0_30px_rgba(99,102,241,0.4)]" :
+                                       isMid ? "bg-blue-500/20 border-blue-500 text-blue-400 [.light_&]:liquid-node-secondary" :
+                                          isExcluded ? "opacity-20 translate-y-4 grayscale" :
+                                             "bg-white/5 border-white/10 text-white/40 [.light_&]:bg-black/5 [.light_&]:border-black/10 [.light_&]:text-black/40"
+                              )}
+                           >
+                              {val}
+                              {isCurrent && (
+                                 <div className="absolute -top-12 flex flex-col items-center">
+                                    <Search size={16} className="text-primary animate-bounce" />
+                                 </div>
+                              )}
+                              {type === "binary" && (
+                                 <>
+                                    {isLow && <div className="absolute -bottom-6 text-xs font-black text-blue-400 uppercase tracking-widest">LOW</div>}
+                                    {isHigh && <div className="absolute -bottom-10 text-xs font-black text-rose-400 uppercase tracking-widest">HIGH</div>}
+                                 </>
+                              )}
+                           </div>
+                        );
+                     })}
                   </div>
 
                   {/* Legend */}
