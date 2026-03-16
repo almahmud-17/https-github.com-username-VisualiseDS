@@ -36,7 +36,7 @@ interface CodePanelProps {
     currentLine: number;
 }
 
-export function CodePanel({ code, algorithm, currentLine }: CodePanelProps) {
+export const CodePanel = React.memo(function CodePanel({ code, algorithm, currentLine }: CodePanelProps) {
     // If they still pass code for whatever reason, fallback or ignore it since we want algorithms everywhere.
     // However we'll assume the parent component has been updated to pass `algorithm`
     const content = algorithm || code?.python || [];
@@ -87,4 +87,4 @@ export function CodePanel({ code, algorithm, currentLine }: CodePanelProps) {
             </div>
         </div>
     );
-}
+});

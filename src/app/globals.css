@@ -40,30 +40,30 @@
   body {
     background-color: var(--background);
     color: var(--foreground);
-    @apply antialiased min-h-screen transition-colors duration-500 overflow-x-hidden;
+    @apply antialiased min-h-screen overflow-x-hidden;
     font-family: var(--font-sans);
   }
 }
 
 @utility glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border: 1px solid var(--border-color);
 }
 
 @utility glass-card {
   background: var(--card-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border: 1px solid var(--border-color);
   border-radius: 1.5rem;
 }
 
 @utility liquid-button {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
-  backdrop-filter: blur(30px) !important;
-  -webkit-backdrop-filter: blur(30px) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
   border: 1px solid rgba(255, 255, 255, 0.8) !important;
   border-bottom-color: rgba(255, 255, 255, 0.3) !important;
   box-shadow:
@@ -105,8 +105,8 @@
 
 @utility liquid-node {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 100%) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
   border: 1px solid rgba(255, 255, 255, 0.8) !important;
   box-shadow:
     inset 0 2px 5px rgba(255, 255, 255, 0.8),
@@ -117,8 +117,8 @@
 
 @utility liquid-node-active {
   background: linear-gradient(180deg, rgba(0, 122, 255, 0.2) 0%, rgba(0, 122, 255, 0.05) 100%) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
   border: 1px solid rgba(0, 122, 255, 0.5) !important;
   box-shadow:
     inset 0 2px 5px rgba(255, 255, 255, 0.5),
@@ -129,8 +129,8 @@
 
 @utility liquid-node-success {
   background: linear-gradient(180deg, rgba(52, 199, 89, 0.2) 0%, rgba(52, 199, 89, 0.05) 100%) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
   border: 1px solid rgba(52, 199, 89, 0.5) !important;
   box-shadow:
     inset 0 2px 5px rgba(255, 255, 255, 0.5),
@@ -141,8 +141,8 @@
 
 @utility liquid-node-danger {
   background: linear-gradient(180deg, rgba(255, 59, 48, 0.2) 0%, rgba(255, 59, 48, 0.05) 100%) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
   border: 1px solid rgba(255, 59, 48, 0.5) !important;
   box-shadow:
     inset 0 2px 5px rgba(255, 255, 255, 0.5),
@@ -153,8 +153,8 @@
 
 @utility liquid-node-secondary {
   background: linear-gradient(180deg, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.05) 100%) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
   border: 1px solid rgba(139, 92, 246, 0.5) !important;
   box-shadow:
     inset 0 2px 5px rgba(255, 255, 255, 0.5),
@@ -165,8 +165,8 @@
 
 @utility liquid-selector {
   background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border: 1px solid var(--border-color);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 4px;
@@ -183,4 +183,26 @@
     background: #007AFF;
     box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
   }
+}
+
+/* ===== Background CSS Animations (replaces framer-motion) ===== */
+
+@keyframes blobFloat1 {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.2) translate(50px, 30px); }
+}
+
+@keyframes blobFloat2 {
+  0%, 100% { transform: scale(1.1) translate(0, 0); }
+  50% { transform: scale(1) translate(-40px, -60px); }
+}
+
+@keyframes blobPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+@keyframes iconFloat {
+  0%, 100% { opacity: 0.05; transform: translateY(0) rotate(0deg); }
+  50% { opacity: 0.2; transform: translateY(-80px) rotate(180deg); }
 }

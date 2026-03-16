@@ -1,10 +1,9 @@
 "use client";
 
 import React, { forwardRef } from "react";
-import { motion, HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-interface PremiumButtonProps extends Omit<HTMLMotionProps<"button">, "ref" | "children"> {
+interface PremiumButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: "primary" | "secondary" | "danger" | "ghost" | "gradient";
     loading?: boolean;
     children?: React.ReactNode;
@@ -21,14 +20,12 @@ export const PremiumButton = forwardRef<HTMLButtonElement, PremiumButtonProps>(
         };
 
         return (
-            <motion.button
+            <button
                 ref={ref}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
                 className={cn(
-                    "relative overflow-hidden px-6 py-2.5 rounded-full font-bold transition-all flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed",
+                    "relative overflow-hidden px-6 py-2.5 rounded-full font-bold flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed",
                     "border border-white/10 group-hover:border-white/20",
-
+                    "transition-transform duration-200 ease-out hover:scale-105 hover:-translate-y-0.5 active:scale-95",
                     variants[variant],
                     className
                 )}
@@ -45,7 +42,7 @@ export const PremiumButton = forwardRef<HTMLButtonElement, PremiumButtonProps>(
                         children
                     )}
                 </span>
-            </motion.button>
+            </button>
         );
     }
 );

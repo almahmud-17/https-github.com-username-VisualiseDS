@@ -1,8 +1,9 @@
+import React from "react";
 import Link from "next/link";
 import { Code2, Sun, Moon } from "lucide-react";
 import { useTheme } from "./Providers";
 
-export function Navbar() {
+export const Navbar = React.memo(function Navbar() {
     const { theme, toggleTheme } = useTheme();
 
     return (
@@ -64,4 +65,4 @@ export function Navbar() {
             </div>
         </nav>
     );
-}
+});

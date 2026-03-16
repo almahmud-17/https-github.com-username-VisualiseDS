@@ -11,7 +11,7 @@ export interface LogicBreakdownProps {
     complexity: string;
 }
 
-export function LogicBreakdown({ steps, complexity }: LogicBreakdownProps) {
+export const LogicBreakdown = React.memo(function LogicBreakdown({ steps, complexity }: LogicBreakdownProps) {
     return (
         <div className="glass-card flex flex-col h-full overflow-hidden border border-[#ec4899]/30 [.light_&]:border-[#007AFF]/20 [.light_&]:border-[#007AFF]/20 bg-[#131127] [.light_&]:bg-white/70 [.light_&]:bg-white/70 [.light_&]:shadow-xl shadow-[0_0_50px_rgba(236,72,153,0.1)] [.light_&]:shadow-xl rounded-[2.5rem] relative">
             <div className="absolute top-0 right-0 w-80 h-80 bg-[#ec4899]/10 [.light_&]:bg-[#007AFF]/10 [.light_&]:bg-[#007AFF]/5 blur-[120px] -z-10 rounded-full pointer-events-none" />
@@ -45,4 +45,4 @@ export function LogicBreakdown({ steps, complexity }: LogicBreakdownProps) {
             </div>
         </div>
     );
-}
+});
