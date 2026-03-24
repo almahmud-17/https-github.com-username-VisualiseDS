@@ -82,7 +82,7 @@ export default function Home() {
         <div className="flex flex-col items-center gap-1.5 px-6 py-2 bg-primary/5 [.light_&]:bg-[#007AFF]/5 border border-primary/20 [.light_&]:border-[#007AFF]/20 rounded-2xl animate-fade-in backdrop-blur-sm group hover:border-primary/40 [.light_&]:hover:border-[#007AFF]/40 transition-all cursor-default scale-110 mb-2">
           <div className="flex items-center gap-2">
             <Cpu size={14} className="text-primary group-hover:rotate-180 transition-transform duration-500" />
-            <span className="text-[10px] font-bold tracking-[0.2em] text-primary">A almahmud_17 project</span>
+            <span className="text-[10px] font-bold tracking-[0.2em] text-primary">An almahmud_17 project</span>
           </div>
         </div>
 
@@ -144,7 +144,7 @@ export default function Home() {
       <footer className="mt-20 pb-10 flex flex-col items-center gap-2 opacity-40 hover:opacity-100 transition-opacity">
         <div className="h-px w-20 bg-gradient-to-r from-transparent via-primary to-transparent mb-4" />
         <p className="text-xs font-mono tracking-[0.2em] ">
-          A almahmud_17 project
+          An almahmud_17 project
         </p>
         <p className="text-[10px] font-bold text-primary/ tracking-widest">
           powered by torchR

@@ -513,7 +513,7 @@ export default function ConceptsPage() {
             <footer className="mt-32 pb-16 flex flex-col items-center gap-3">
                 <div className="h-px w-32 bg-gradient-to-r from-transparent via-primary/40 to-transparent mb-6" />
                 <p className="text-xs font-mono tracking-[0.4em] uppercase text-muted-foreground animate-pulse">
-                    A almahmud_17 project
+                    An almahmud_17 project
                 </p>
                 <div className="flex items-center gap-3 text-[10px] font-bold text-primary/60 tracking-widest uppercase">
                     <Code size={12} />
