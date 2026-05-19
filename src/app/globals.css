@@ -309,3 +309,12 @@
 .smooth-card:hover {
   transform: translateY(-2px);
 }
+
+/* torchR dot-matrix logo — preserve black canvas on any theme */
+.torch-logo-box {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+:root.light .torch-logo-box {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}

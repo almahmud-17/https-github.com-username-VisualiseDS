@@ -14,6 +14,8 @@ import {
   Search
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
+import { BrandLogo } from "@/components/brand/BrandLogo";
+import { BrandFooter } from "@/components/brand/BrandFooter";
 import { PremiumButton } from "@/components/ui/PremiumButton";
 
 const visualizers = [
@@ -79,11 +81,8 @@ export default function Home() {
         <div className="absolute inset-0 max-w-5xl mx-auto h-[600px] top-1/2 -translate-y-1/2 bg-gradient-to-b from-blue-900/40 via-blue-900/10 to-transparent rounded-[4rem] border border-white/5 [.light_&]:border-black/5 backdrop-blur-3xl -z-20"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/20 [.light_&]:bg-[#007AFF]/10 blur-[120px] rounded-full -z-10 pointer-events-none" />
 
-        <div className="flex flex-col items-center gap-1.5 px-6 py-2 bg-primary/5 [.light_&]:bg-[#007AFF]/5 border border-primary/20 [.light_&]:border-[#007AFF]/20 rounded-2xl animate-fade-in backdrop-blur-sm group hover:border-primary/40 [.light_&]:hover:border-[#007AFF]/40 transition-all cursor-default scale-110 mb-2">
-          <div className="flex items-center gap-2">
-            <Cpu size={14} className="text-primary group-hover:rotate-180 transition-transform duration-500" />
-            <span className="text-[10px] font-bold tracking-[0.2em] text-primary">An almahmud_17 project</span>
-          </div>
+        <div className="mb-4">
+          <BrandLogo variant="hero" asLink={false} className="flex-col sm:flex-row items-center justify-center gap-4" />
         </div>
 
         <h1 className="text-6xl md:text-8xl font-black tracking-tight text-foreground leading-[0.9] max-w-4xl">
@@ -162,16 +161,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Attribution */}
-      <footer className="mt-20 pb-10 flex flex-col items-center gap-2 opacity-40 hover:opacity-100 transition-opacity">
-        <div className="h-px w-20 bg-gradient-to-r from-transparent via-primary to-transparent mb-4" />
-        <p className="text-xs font-mono tracking-[0.2em] ">
-          An almahmud_17 project
-        </p>
-        <p className="text-[10px] font-bold text-primary/ tracking-widest">
-          powered by torchR
-        </p>
-      </footer>
+      <BrandFooter />
     </main>
   );
 }

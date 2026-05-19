@@ -11,6 +11,7 @@ import { BookShelf } from "@/components/concepts/BookShelf";
 import { ConceptSidebar } from "@/components/concepts/ConceptSidebar";
 import { ConceptSection } from "@/components/concepts/ConceptSection";
 import { ConceptModal } from "@/components/concepts/ConceptModal";
+import { BrandFooter } from "@/components/brand/BrandFooter";
 
 export default function ConceptsPage() {
   const [selectedTopic, setSelectedTopic] = useState<TopicDetail | null>(null);
@@ -118,12 +119,11 @@ export default function ConceptsPage() {
           </div>
         </div>
 
-        <footer className="mt-20 pt-8 border-t border-white/5 text-center">
-          <p className="text-xs text-muted-foreground flex items-center justify-center gap-2">
-            <BookOpen size={12} />
-            References: Cormen et al. · Knuth · Sedgewick · Horowitz & Sahni · AHU · Weiss · Skiena · Goodrich
-          </p>
-        </footer>
+        <p className="mt-16 text-xs text-muted-foreground flex items-center justify-center gap-2 text-center px-4">
+          <BookOpen size={12} />
+          References: Cormen et al. · Knuth · Sedgewick · Horowitz & Sahni · AHU · Weiss · Skiena · Goodrich
+        </p>
+        <BrandFooter />
       </div>
 
       <AnimatePresence>
