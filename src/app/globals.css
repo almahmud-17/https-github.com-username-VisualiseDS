@@ -310,11 +310,15 @@
   transform: translateY(-2px);
 }
 
-/* torchR dot-matrix logo — preserve black canvas on any theme */
-.torch-logo-box {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+/* torchR dotted wordmark — knock out black, full word fits (no crop) */
+.torch-logo-mark {
+  mix-blend-mode: screen;
+  pointer-events: none;
+  height: auto;
+  aspect-ratio: 1024 / 682;
 }
 
-:root.light .torch-logo-box {
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+:root.light .torch-logo-mark {
+  mix-blend-mode: multiply;
+  filter: invert(1);
 }

@@ -23,10 +23,6 @@ export const metadata: Metadata = {
   title: "DS Visualizer by torchR | Learn Algorithms Visually",
   description:
     "DS Visualizer by torchR — interactive visual learning for data structures and algorithms.",
-  icons: {
-    icon: "/torch-logo.png",
-    apple: "/torch-logo.png",
-  },
 };
 
 import { BackgroundElements } from "@/components/BackgroundElements";
