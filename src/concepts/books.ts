@@ -1,0 +1,77 @@
+import type { BookRef } from "./types";
+
+export const CLASSIC_BOOKS: Record<string, BookRef> = {
+  CLRS: {
+    id: "CLRS",
+    short: "CLRS",
+    title: "Introduction to Algorithms",
+    authors: "Cormen, Leiserson, Rivest & Stein",
+    year: 2009,
+    edition: "3rd ed.",
+    spine: "#8B4513",
+  },
+  SEDGEWICK: {
+    id: "SEDGEWICK",
+    short: "Sedgewick",
+    title: "Algorithms",
+    authors: "Robert Sedgewick & Kevin Wayne",
+    year: 2011,
+    edition: "4th ed.",
+    spine: "#1E3A5F",
+  },
+  KNUTH: {
+    id: "KNUTH",
+    short: "TAOCP",
+    title: "The Art of Computer Programming, Vol. 1",
+    authors: "Donald E. Knuth",
+    year: 1997,
+    edition: "3rd ed.",
+    spine: "#4A3728",
+  },
+  HOROWITZ: {
+    id: "HOROWITZ",
+    short: "Horowitz",
+    title: "Fundamentals of Computer Algorithms",
+    authors: "Horowitz, Sahni & Rajasekaran",
+    year: 2008,
+    edition: "2nd ed.",
+    spine: "#2F4F4F",
+  },
+  AHU: {
+    id: "AHU",
+    short: "AHU",
+    title: "The Design and Analysis of Computer Algorithms",
+    authors: "Aho, Hopcroft & Ullman",
+    year: 1974,
+    spine: "#5D4037",
+  },
+  WEISS: {
+    id: "WEISS",
+    short: "Weiss",
+    title: "Data Structures and Algorithm Analysis in C++",
+    authors: "Mark Allen Weiss",
+    year: 2014,
+    edition: "4th ed.",
+    spine: "#283593",
+  },
+  SKIENA: {
+    id: "SKIENA",
+    short: "Skiena",
+    title: "The Algorithm Design Manual",
+    authors: "Steven S. Skiena",
+    year: 2020,
+    edition: "3rd ed.",
+    spine: "#00695C",
+  },
+  GOODRICH: {
+    id: "GOODRICH",
+    short: "Goodrich",
+    title: "Data Structures and Algorithms in Java",
+    authors: "Goodrich, Tamassia & Goldwasser",
+    year: 2014,
+    edition: "6th ed.",
+    spine: "#6A1B9A",
+  },
+};
+
+export const BOOK_LIST = Object.values(CLASSIC_BOOKS);

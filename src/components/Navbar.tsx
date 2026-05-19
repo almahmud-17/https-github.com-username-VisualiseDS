@@ -32,7 +32,7 @@ export const Navbar = React.memo(function Navbar() {
                             <Link href="/visualize/stack" className="px-4 py-2 hover:bg-primary/10 [.light_&]:bg-[#007AFF]/10 rounded-lg transition-colors">Stack</Link>
                             <Link href="/visualize/queue" className="px-4 py-2 hover:bg-primary/10 [.light_&]:bg-[#007AFF]/10 rounded-lg transition-colors">Queue</Link>
                             <Link href="/visualize/linked-list" className="px-4 py-2 hover:bg-primary/10 [.light_&]:bg-[#007AFF]/10 rounded-lg transition-colors">Linked List</Link>
-                            <Link href="/visualize/tree" className="px-4 py-2 hover:bg-primary/10 [.light_&]:bg-[#007AFF]/10 rounded-lg transition-colors">Binary Tree</Link>
+                            <Link href="/visualize/tree" className="px-4 py-2 hover:bg-primary/10 [.light_&]:bg-[#007AFF]/10 rounded-lg transition-colors">Trees (BT, BST, AVL, Heap)</Link>
                         </div>
                     </div>
                 </li>

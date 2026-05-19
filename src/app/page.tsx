@@ -39,8 +39,8 @@ const visualizers = [
     color: "bg-primary/10 border-primary/20 [.light_&]:border-[#007AFF]/20 hover:border-primary/50",
   },
   {
-    title: "Binary Tree",
-    description: "Hierarchical structure with recursive properties. Explore traversals and BST logic.",
+    title: "Tree Visualizers",
+    description: "Binary Tree, BST, AVL, Max Heap & Min Heap — insert, traverse, search, and heap extract.",
     icon: <Triangle className="text-purple-400" size={24} />,
     href: "/visualize/tree",
     color: "bg-purple-500/10 border-purple-500/20 hover:border-purple-500/50"
@@ -110,14 +110,36 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="container max-w-7xl px-6 py-4">
+        <div className="glass-card smooth-card p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-2">
+              Absolute Beginner → Algorithmic Thinker
+            </p>
+            <h2 className="font-serif text-2xl font-bold text-foreground">
+              Learn theory, then visualize step by step
+            </h2>
+            <p className="text-sm text-muted-foreground mt-2 max-w-xl">
+              Classic concepts from CLRS, Knuth & Sedgewick — then launch interactive visualizers.
+            </p>
+          </div>
+          <Link
+            href="/concepts"
+            className="shrink-0 px-6 py-3 rounded-xl bg-primary text-white font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-opacity"
+          >
+            Explore Concepts →
+          </Link>
+        </div>
+      </section>
+
       {/* Visualizer Grid */}
-      <div id="visualizers" className="container max-w-7xl px-6 py-20">
+      <div id="visualizers" className="container max-w-7xl px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {visualizers.map((viz, idx) => (
             <Link
               key={idx}
               href={viz.href}
-              className="group glass-card p-8 flex flex-col gap-6 hover:border-primary/30 transition-all duration-500 hover:-translate-y-2"
+              className="group glass-card smooth-card p-8 flex flex-col gap-6 hover:border-primary/30"
             >
               <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${viz.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
                 {viz.icon}
