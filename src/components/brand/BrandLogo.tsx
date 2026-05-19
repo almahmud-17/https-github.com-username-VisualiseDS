@@ -38,10 +38,9 @@ function TorchMark({ variant }: { variant: BrandVariant }) {
       width={s.w}
       height={s.px}
       className={cn(
-        "torch-logo-mark shrink-0 w-auto object-contain object-center",
+        "torch-logo-mark shrink-0 object-contain object-left",
         s.h
       )}
-      style={{ width: "auto", maxWidth: "none" }}
       priority={variant === "navbar" || variant === "hero"}
     />
   );
