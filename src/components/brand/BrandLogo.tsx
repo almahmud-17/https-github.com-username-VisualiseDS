@@ -33,7 +33,7 @@ function TorchMark({ variant }: { variant: BrandVariant }) {
   const s = MARK_SIZE[variant];
   return (
     <Image
-      src="/torch-logo.png"
+      src="/torch-logo.svg"
       alt=""
       width={s.w}
       height={s.px}
